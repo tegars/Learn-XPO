@@ -12,18 +12,10 @@ namespace LearnXPO.Controllers
 {
     public class CustomerController : Controller
     {
-        private Session session;
-        public CustomerController()
-        {
-            session = new Session();
-            XpoDefault.Session = session;
-        }
+        private Session session => XpoDefault.Session;
         public ActionResult Index()
         {
-            #region --- exploration ---
-            //XPCollection<Customer> dataCustomer2 = new XPCollection<Customer>(session, new BinaryOperator("Name", "Tono"));
-            #endregion
-            XPCollection<Customer> dataCustomer = new XPCollection<Customer>(XpoDefault.Session);
+            XPCollection<Customer> dataCustomer = new XPCollection<Customer>(session);
             var model = new ListCustomerVM();
             model.customer = dataCustomer.Select(x => new CustomerVM { OID = x.Oid, Name = x.Name, Age = x.Age }).ToList();    
             return View(model);
