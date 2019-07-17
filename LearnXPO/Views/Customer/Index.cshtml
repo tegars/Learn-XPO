@@ -1,0 +1,39 @@
+﻿@model LearnXPO.Models.ListCustomerVM
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <h2 style="text-align:center">Implementation EF to ASP.NET</h2>
+    <a href="@Url.Action("Create","Customer")">Create</a>
+    <table>
+        <thead>
+            <tr>
+                <th>Oid</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var data in Model.customer)
+            {
+                <tr>
+                    <td>@data.OID</td>
+                    <td>@data.Name</td>
+                    <td>@data.Age</td>
+                    <td>
+                        <a href="@Url.Action("Detail","Customer", new {id=data.OID})">Detail</a>
+                        <a href="@Url.Action("Edit", "Customer", new {id=data.OID })">Edit</a>
+                        <a href="@Url.Action("Delete","Customer", new { id=data.OID})">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

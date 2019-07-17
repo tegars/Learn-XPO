@@ -1,0 +1,19 @@
+﻿@model LearnXPO.Models.CustomerVM
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <h2 style="text-align:center">Create Customer</h2>
+    <form action="@Url.Action("Create", "Customer")" method="post">
+        Name: <input type="text" name="Name" value="@Model.Name" /> <br />
+        Age: <input type="text" name="Age" value="@Model.Age" /> <hr/>
+
+        <input type="submit" value="Submit" />
+    </form>
+</body>
+</html>
