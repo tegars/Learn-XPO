@@ -36,6 +36,7 @@ namespace LearnXPO.Controllers
         {
             var model = new CustomerVM();
             Customer dataCustomer = session.FindObject<Customer>(new BinaryOperator("Oid", id));
+            //Customer dataCustomer = session.FindObject<Customer>(new BinaryOperator("Oid", id, BinaryOperatorType.Greater));
             if (dataCustomer != null)
             {
                 model.OID = dataCustomer.Oid;
@@ -47,6 +48,7 @@ namespace LearnXPO.Controllers
         [HttpPost]
         public ActionResult Edit(CustomerVM model)
         {
+            //kalau pakai ini softdelete akan tetap di temukan
             Customer customer = session.GetObjectByKey<Customer>(model.OID);
             customer.Name = model.Name;
             customer.Age = model.Age;

@@ -22,5 +22,11 @@ namespace LearnXPO.XPO
             get { return fAge; }
             set { SetPropertyValue<ushort>("Age", ref fAge, value); }
         }
+        string fAddress;
+        public string Address
+        {
+            get { return fAddress; }
+            set { SetPropertyValue<string>("Address", ref fAddress, value); }
+        }
     }
 }
