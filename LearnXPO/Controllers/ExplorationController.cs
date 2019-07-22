@@ -13,7 +13,12 @@ namespace LearnXPO.Controllers
     public class ExplorationController : Controller
     {
         private Session session => XpoDefault.Session;
-        private UnitOfWork uow => new UnitOfWork();
+        private UnitOfWork uow; 
+        public ExplorationController()
+        {
+            uow = new UnitOfWork();
+            uow.ConnectionString = @"XpoProvider=MSSqlServer;data source=WFR-BTM-046;integrated security=SSPI;initial catalog=LearnXPO; uid=sa; pwd=aaaa123";
+        }
         public ActionResult Index()
         {
             #region --- Criteria Operator (parse), Group Operator, Binary Operator, Between Operator ---
@@ -59,31 +64,31 @@ namespace LearnXPO.Controllers
 
             return View();
         }
-        public ActionResult LearnTransaction()
-        {
-            session.BeginTransaction();
-            Customer customer = new Customer(session);
-            customer.Name = "Susan";
-            customer.Age = 39;
-            customer.Save();
-            //session.CommitTransaction();
-            session.RollbackTransaction();
-            return View();
-        }
         public ActionResult LearnUow()
         {
-             Customer customer = uow.FindObject<Customer>(new BinaryOperator("Name", "Susan"));
+            Customer customer = uow.FindObject<Customer>(new BinaryOperator("Name", "Susan"));
+            XPCollection<Customer> listCustomer = new XPCollection<Customer>(uow);
+
+            //uow = insert update delete harus pakai begin transaction
+            uow.BeginTransaction();
+            Customer newCustomer = new Customer(uow);
+            newCustomer.Name = "Susanti";
+            newCustomer.Age = 42;
+            newCustomer.Save();
+            //uow.RollbackTransaction();
+            uow.CommitTransaction();
+
             return View();
         }
-        public ActionResult LearnPersistent() //???
+        public ActionResult LearnPersistent()
         {
             uow.BeginTransaction();
             Customer customer = new Customer(uow);
             customer.Name = "Susanti";
             customer.Age = 42;
-            //customer.Save();
-
-            Customer susanti = uow.FindObject<Customer>(PersistentCriteriaEvaluationBehavior.BeforeTransaction, new BinaryOperator("Name","Susanti"));
+            
+            Customer susanti = uow.FindObject<Customer>(PersistentCriteriaEvaluationBehavior.InTransaction, new BinaryOperator("Name","Susanti"));
+            Customer susanti2 = uow.FindObject<Customer>(new BinaryOperator("Name","Susanti"));
             return View();
         }
     }
