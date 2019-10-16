@@ -48,6 +48,9 @@ namespace LearnXPO.Controllers
             //ContainsOperator filter7 = new ContainsOperator("Name","on");
             //XPCollection<Customer> dataCustomer5 = new XPCollection<Customer>(session, filter7);
 
+            //5. In Operator
+            //xpCollection1.Filter = new InOperator("Name", new string[] {"John", "Mike", "Nick"});
+
             #endregion
             return View();
         }
@@ -56,11 +59,27 @@ namespace LearnXPO.Controllers
             XPCollection collection = new XPCollection(typeof(Customer), null);
             collection.Sorting.Add(new SortProperty("Age", DevExpress.Xpo.DB.SortingDirection.Ascending));
             collection.Sorting.Add(new SortProperty("Age", DevExpress.Xpo.DB.SortingDirection.Descending));
-            collection.TopReturnedObjects = 3;
+            collection.TopReturnedObjects = 15;
 
             //Contoh Pengguna'an Filter (Client Side)
-            collection.Filter= new BetweenOperator("Age", 20, 30);
+            //collection.Filter= new BetweenOperator("Age", 20, 30);
             collection.Filter = null;
+            collection.TopReturnedObjects = 2;
+
+            //ketika sudah di komsumsi "collection.TopReturnedObjects" sudah tidak bisa bekerja
+            //contoh di komsumsi collection.count > 0
+            //ketika sudah di sorot mode debugging, "TopReturnedObjects" pun juga sudah tidak bisa bekerja
+            return View();
+        }
+        public ActionResult LearnTopReturn()
+        {
+            XPCollection<Customer> Customer = new XPCollection<Customer>(uow);
+            Customer.TopReturnedObjects = 5;
+
+            //Contoh Pengguna'an Filter (Client Side)
+            //collection.Filter= new BetweenOperator("Age", 20, 30);
+            Customer.Filter = null;
+            Customer.TopReturnedObjects = 2;
 
             return View();
         }
