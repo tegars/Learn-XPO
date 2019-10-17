@@ -9,4 +9,4 @@ eXpress Persistent Objects (XPO) is an Object-Relational Mapping (ORM) tool that
   <li>Visual Studio 2017</li>
 </ul>
 
-<a href="https://www.devexpress.com/products/net/orm/">Read Documentation</a>
+<a href="https://www.devexpress.com/products/net/orm/">Read XPO Documentation</a>
